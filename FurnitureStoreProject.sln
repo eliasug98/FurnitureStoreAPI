@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureStoreProject.API", "FurnitureStoreProject.API\FurnitureStoreProject.API.csproj", "{244DEE47-6F58-49C5-8C31-9404E8C63465}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{244DEE47-6F58-49C5-8C31-9404E8C63465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244DEE47-6F58-49C5-8C31-9404E8C63465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244DEE47-6F58-49C5-8C31-9404E8C63465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244DEE47-6F58-49C5-8C31-9404E8C63465}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {228217FE-0F10-445D-BDF9-0080C3A3C12F}
+	EndGlobalSection
+EndGlobal
