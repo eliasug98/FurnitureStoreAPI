@@ -17,7 +17,7 @@ namespace FurnitureStore.API.Entities
         [JsonIgnore]
         [ForeignKey("UserId")]
         public User User { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
         public decimal Total
         {

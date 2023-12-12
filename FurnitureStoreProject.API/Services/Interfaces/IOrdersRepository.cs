@@ -5,7 +5,7 @@ namespace FurnitureStore.API.Services.Interfaces
 {
     public interface IOrdersRepository
     {
-        void AddOrder(Order order);
+        void AddOrder(Order order, List<OrderDetail> orderDetails);
         bool DeleteOrderAndDetails(int orderId);
         IEnumerable<Order> GetAllOrders();
         Order? GetOrderById(int id);

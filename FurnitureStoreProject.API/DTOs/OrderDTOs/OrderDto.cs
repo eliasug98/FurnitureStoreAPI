@@ -10,7 +10,7 @@ namespace FurnitureStore.API.DTOs.OrderDTOs
 
         public int UserId { get; set; }
 
-        public IList<OrderDetailDto> OrderDetails { get; set; }
+        public IList<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
 
     }
 }

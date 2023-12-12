@@ -14,7 +14,7 @@ namespace FurnitureStore.API.Entities
         public string Image { get; set; }
 
         [Required]
-        public bool Available { get; set; } = false;
+        public bool Available { get; set; } = true;
 
         [Required]
         [MaxLength(50)]

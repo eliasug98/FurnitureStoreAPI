@@ -37,7 +37,7 @@ namespace FurnitureStore.API.DBContext
                 .HasOne(od => od.Product)
                 .WithMany()
                 .HasForeignKey(od => od.ProductId)
-                .OnDelete(DeleteBehavior.Restrict); //asegura que no se pueda eliminar un producto si hay detalles de pedido relacionados con ese producto
+                .OnDelete(DeleteBehavior.ClientSetNull); //.Restrict asegura que no se pueda eliminar un producto si hay detalles de pedido relacionados con ese producto
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)

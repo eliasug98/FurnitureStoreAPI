@@ -25,7 +25,7 @@ namespace FurnitureStore.API.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<List<OrderDto>> GetAll()
+        public ActionResult<List<Order>> GetAll()
         {
             string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
 
@@ -38,8 +38,8 @@ namespace FurnitureStore.API.Controllers
             if (orders.Count == 0)
                 return NotFound("The order list is empty");
 
-            var orderDto = _mapper.Map<List<OrderDto>>(orders);
-            return Ok(orderDto);
+            //var orderDto = _mapper.Map<List<OrderDto>>(orders);
+            return Ok(orders);
         }
 
 
@@ -73,41 +73,44 @@ namespace FurnitureStore.API.Controllers
             if(_repository.OrderExists(id)) 
                 return BadRequest("order already exist");
 
+            var orderDetail = orderToCreate.OrderDetails.ToList();
+            var newOrderDetails = _mapper.Map<List<OrderDetail>>(orderDetail);
+
             var newOrder = _mapper.Map<Order>(orderToCreate);
             
-            _repository.AddOrder(newOrder);
+            _repository.AddOrder(newOrder, newOrderDetails);
             _repository.SaveChanges();
 
             return Created("GetOrder", orderToCreate);
         }
 
-        [HttpPut("{idOrder}")]
-        [Authorize]
-        public IActionResult UpdateOrder(int idOrder, [FromBody] OrderToUpdateDto orderUpdated)
-        {
-            string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
+        //[HttpPut("{idOrder}")]
+        //[Authorize]
+        //public IActionResult UpdateOrder(int idOrder, [FromBody] OrderToUpdateDto orderUpdated)
+        //{
+        //    string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
 
-            if (role != "Admin")
-            {
-                return Unauthorized("Not authorized to view users.");
-            }
+        //    if (role != "Admin")
+        //    {
+        //        return Unauthorized("Not authorized to view users.");
+        //    }
 
-            var order = _repository.GetOrderById(idOrder);
-            if (order == null)
-                return NotFound();
+        //    var order = _repository.GetOrderById(idOrder);
+        //    if (order == null)
+        //        return NotFound();
 
-            _mapper.Map(orderUpdated, order);
+        //    _mapper.Map(orderUpdated, order);
 
-            var orderDetails = order.OrderDetails.ToList();
-            var detailUpdated = orderUpdated.OrderDetails.ToList();
+        //    var orderDetails = order.OrderDetails.ToList();
+        //    var detailUpdated = orderUpdated.OrderDetails.ToList();
 
-            _mapper.Map(detailUpdated, orderDetails);
+        //    _mapper.Map(detailUpdated, orderDetails);
 
-            _repository.Update(order, orderDetails);
-            _repository.SaveChanges();
+        //    _repository.Update(order, orderDetails);
+        //    _repository.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("{idOrder}")]
         [Authorize]
