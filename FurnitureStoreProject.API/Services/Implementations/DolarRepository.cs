@@ -13,7 +13,6 @@ namespace FurnitureStore.API.Services.Implementations
         {
             _httpClient = httpClient;
         }
-
         public async Task<DolarResponse> GetDolar()
         {
             var response = await _httpClient.GetAsync("https://dolarapi.com/v1/dolares/blue");

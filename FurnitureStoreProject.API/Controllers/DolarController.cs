@@ -21,8 +21,14 @@ namespace FurnitureStore.API.Controllers
         [HttpGet]
         public async Task<ActionResult<DolarResponse>> GetDolar()
         {
-            var dolarResponse = await _dolarRepository.GetDolar();
+            var dolarResponse = await GetDolarResponse();
+
             return Ok(dolarResponse);
+        }
+
+        private Task<DolarResponse>? GetDolarResponse() 
+        {
+            return _dolarRepository.GetDolar();
         }
     }
 }
