@@ -69,7 +69,7 @@ namespace FurnitureStore.API.DBContext
                 new ProductCategory()
                 {
                     Id = 3,
-                    Icon = "mueblePequeño",
+                    Icon = "mueblePequenio",
                     Name = "Muebles pequeños",
                     Description = "Muebles pequeños para decoracion",
                 },
@@ -247,14 +247,6 @@ namespace FurnitureStore.API.DBContext
                     Email = "usuario4@gmail.com",
                     Role = "Cliente"
                 }
-                //new User()
-                //{
-                //    Id = 3,
-                //    Username = "nadiemas",
-                //    Password = "sdDEasdegR12FgDsnasfdA",
-                //    Email = "nadie@gmail.com",
-                //    Role = "nadie"
-                //},
             };
             modelBuilder.Entity<User>().HasData(users);
 
