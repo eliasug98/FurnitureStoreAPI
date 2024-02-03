@@ -17,22 +17,13 @@ namespace FurnitureStore.API.Services.Implementations
 
         public IEnumerable<User> GetUsers()
         {
-            return _context.Users.Include(u => u.Orders).ThenInclude(o => o.OrderDetails);
-        }
-
-        public IEnumerable<User> GetUsersWithoutOrders()
-        {
             return _context.Users;
         }
-        
-        //public User? GetUserWithoutOrder(int idUser) // 
-        //{
-        //    return _context.Users.FirstOrDefault(u => u.Id == idUser);
-        //}
+
 
         public User? GetUser(int idUser)
         {
-            return _context.Users.Include(u => u.Orders).ThenInclude(o => o.OrderDetails).FirstOrDefault(u => u.Id == idUser);
+            return _context.Users.FirstOrDefault(u => u.Id == idUser);
         }
 
         public void AddUser(User newUser)

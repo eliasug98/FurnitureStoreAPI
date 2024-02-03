@@ -72,7 +72,7 @@ namespace FurnitureStore.API.Controllers
                 return Unauthorized("Not authorized to view users.");
             }
 
-            List<User> users = _repository.GetUsersWithoutOrders().ToList();
+            List<User> users = _repository.GetUsers().ToList();
 
             var usersDto = _mapper.Map<List<UserDto>>(users);
             return Ok(usersDto);

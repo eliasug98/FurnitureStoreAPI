@@ -29,6 +29,11 @@ namespace FurnitureStore.API.Services.Implementations
             return _context.Orders.Where(o => o.Id == orderId).SelectMany(o => o.OrderDetails);
         }
 
+        public IEnumerable<Order> GetOrdersByUserId(int idUser)
+        {
+            return _context.Orders.Include(o => o.OrderDetails).Where(o => o.UserId == idUser);
+        }
+
         public bool OrderExists(int idOrder)
         {
             return _context.Orders.Where(o => o.Id == idOrder).Any();

@@ -10,6 +10,7 @@ namespace FurnitureStore.API.Services.Interfaces
         IEnumerable<Order> GetAllOrders();
         Order? GetOrderById(int id);
         IEnumerable<OrderDetail> GetOrderDetailsByOrderId(int orderId);
+        IEnumerable<Order> GetOrdersByUserId(int idUser);
         bool OrderExists(int idOrder);
         bool SaveChanges();
         void Update(Order order, List<OrderDetail> orderDetails);

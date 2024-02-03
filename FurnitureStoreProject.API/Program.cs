@@ -52,10 +52,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FurnitureStoreContext>(dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:FurnitureStoreDBConnectionString"])); // agregamos el context
 
 builder.Services.AddScoped<HttpClient>();
-builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IProductCategoriesRepository, ProductCategoriesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IDolarRepository, DolarRepository>();
 

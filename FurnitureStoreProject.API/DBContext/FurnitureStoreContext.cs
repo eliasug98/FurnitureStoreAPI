@@ -1,5 +1,6 @@
 ﻿using FurnitureStore.API.Entities;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.X500;
 
 namespace FurnitureStore.API.DBContext
 {
@@ -25,7 +26,7 @@ namespace FurnitureStore.API.DBContext
         {
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
+                .WithMany()
                 .HasForeignKey(o => o.UserId);
 
             modelBuilder.Entity<OrderDetail>()
@@ -43,11 +44,6 @@ namespace FurnitureStore.API.DBContext
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
-
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId);
 
             
             var productCategories = new ProductCategory[3]

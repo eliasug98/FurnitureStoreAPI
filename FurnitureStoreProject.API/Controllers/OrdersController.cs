@@ -15,12 +15,10 @@ namespace FurnitureStore.API.Controllers
     {
         private readonly IOrdersRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IUsersRepository _usersRepository;
-        public OrdersController(IOrdersRepository repository, IMapper mapper, IUsersRepository usersRepository)
+        public OrdersController(IOrdersRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _usersRepository = usersRepository;
         }
 
         [HttpGet]
@@ -63,54 +61,49 @@ namespace FurnitureStore.API.Controllers
             return Ok(orderDto);
         }
 
+        [HttpGet("user/{userId}")]
+        [Authorize]
+        public IActionResult GetOrdersByUserId(int userId)
+        {
+            string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
+
+            if (role != "Admin")
+            {
+                return Unauthorized("Not authorized to view orders.");
+            }
+
+            //if (!_repository.OrderExists(idOrder))
+            //    return NotFound();
+
+            List<Order> orders = _repository.GetOrdersByUserId(userId).ToList();
+
+            if (orders.Count == 0) 
+                return NotFound("Order list is empty");
+
+            var orderDto = _mapper.Map<OrderDto>(orders);
+
+            return Ok(orderDto);
+        }
+
         [HttpPost("{id}")]
         public IActionResult CreateOrder(int id, [FromBody] OrderToCreateDto orderToCreate)
         {
-
             if (orderToCreate == null)
                 return BadRequest();
 
-            if(_repository.OrderExists(id)) 
+            if (_repository.OrderExists(id))
                 return BadRequest("order already exist");
 
             var orderDetail = orderToCreate.OrderDetails.ToList();
             var newOrderDetails = _mapper.Map<List<OrderDetail>>(orderDetail);
 
             var newOrder = _mapper.Map<Order>(orderToCreate);
-            
-            _repository.AddOrder(newOrder, newOrderDetails);
-            _repository.SaveChanges();
 
-            return Created("GetOrder", orderToCreate);
+            _repository.AddOrder(newOrder, newOrderDetails);
+
+            return Created("Created", orderToCreate);
         }
 
-        //[HttpPut("{idOrder}")]
-        //[Authorize]
-        //public IActionResult UpdateOrder(int idOrder, [FromBody] OrderToUpdateDto orderUpdated)
-        //{
-        //    string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
-
-        //    if (role != "Admin")
-        //    {
-        //        return Unauthorized("Not authorized to view users.");
-        //    }
-
-        //    var order = _repository.GetOrderById(idOrder);
-        //    if (order == null)
-        //        return NotFound();
-
-        //    _mapper.Map(orderUpdated, order);
-
-        //    var orderDetails = order.OrderDetails.ToList();
-        //    var detailUpdated = orderUpdated.OrderDetails.ToList();
-
-        //    _mapper.Map(detailUpdated, orderDetails);
-
-        //    _repository.Update(order, orderDetails);
-        //    _repository.SaveChanges();
-
-        //    return NoContent();
-        //}
 
         [HttpDelete("{idOrder}")]
         [Authorize]

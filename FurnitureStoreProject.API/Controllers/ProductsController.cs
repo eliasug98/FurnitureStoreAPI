@@ -14,13 +14,11 @@ namespace FurnitureStore.API.Controllers
     {
         private readonly IProductsRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IUsersRepository _usersRepository;
 
-        public ProductsController(IProductsRepository repository, IMapper mapper, IUsersRepository usersRepository)
+        public ProductsController(IProductsRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _usersRepository = usersRepository;
         }
 
         [HttpGet]
@@ -30,8 +28,8 @@ namespace FurnitureStore.API.Controllers
             if(products.Count == 0)
                 return NotFound("The product list is empty");
 
-            var productDto = _mapper.Map<List<ProductDto>>(products);
-            return Ok(productDto);
+            var productsDto = _mapper.Map<List<ProductDto>>(products);
+            return Ok(productsDto);
         }
 
         [HttpGet("{idProduct}", Name = "GetProduct")]
@@ -77,7 +75,7 @@ namespace FurnitureStore.API.Controllers
                 return BadRequest("product could not be created");
             }
 
-            return Created("GetProduct", _mapper.Map<ProductDto>(newProduct)); //
+            return Created("Created", _mapper.Map<ProductDto>(newProduct)); //
         }
 
         [HttpPut("{idProduct}")]

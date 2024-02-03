@@ -24,7 +24,7 @@ namespace FurnitureStore.API.Entities
         public string Role { get; set; }
         //public entidad entidad { get; set; }
         //public ICollection<entidad> entidad { get; set; }
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        //public ICollection<Order> Orders { get; set; } = new List<Order>();
 
         public DateTime CreatedDate { get; private set; } = DateTime.Now;
 

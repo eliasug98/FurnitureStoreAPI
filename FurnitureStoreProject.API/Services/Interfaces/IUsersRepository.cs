@@ -6,7 +6,6 @@ namespace FurnitureStore.API.Services.Interfaces
     public interface IUsersRepository
     {
         public IEnumerable<User> GetUsers();
-        public IEnumerable<User> GetUsersWithoutOrders();
         public User? GetUser(int idUser);
         void AddUser(User newUser);
         void DeleteUser(User user);
@@ -14,7 +13,6 @@ namespace FurnitureStore.API.Services.Interfaces
         bool UserNameExists(string name);
         bool SaveChanges();
         User? ValidateCredentials(UserLoginDto authParams);
-        //User? GetUserWithoutOrder(int idUser);
         void Update(User user);
     }
 }

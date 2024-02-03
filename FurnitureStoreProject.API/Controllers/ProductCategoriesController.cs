@@ -15,13 +15,11 @@ namespace FurnitureStore.API.Controllers
     {
         private readonly IProductCategoriesRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IUsersRepository _usersRepository;
 
-        public ProductCategoriesController(IProductCategoriesRepository repository, IMapper mapper, IUsersRepository userRepository)
+        public ProductCategoriesController(IProductCategoriesRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _usersRepository = userRepository;
         }
 
         [HttpGet]
@@ -99,7 +97,7 @@ namespace FurnitureStore.API.Controllers
                 return BadRequest("productCategory could not be created");
             }
 
-            return Created("GetProduct", _mapper.Map<ProductCategoryDto>(newProductCategory)); // ver
+            return Created("Created", _mapper.Map<ProductCategoryDto>(newProductCategory)); // ver
         }
     }
 }
