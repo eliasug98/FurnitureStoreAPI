@@ -86,20 +86,18 @@ namespace FurnitureStore.API.Controllers
         }
 
         [HttpPost("{id}")]
-        public IActionResult CreateOrder(int id, [FromBody] OrderToCreateDto orderToCreate)
+        public IActionResult CreateOrder([FromBody] OrderToCreateDto orderToCreate)
         {
             if (orderToCreate == null)
                 return BadRequest();
 
-            if (_repository.OrderExists(id))
-                return BadRequest("order already exist");
-
-            var orderDetail = orderToCreate.OrderDetails.ToList();
-            var newOrderDetails = _mapper.Map<List<OrderDetail>>(orderDetail);
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value);
 
             var newOrder = _mapper.Map<Order>(orderToCreate);
 
-            _repository.AddOrder(newOrder, newOrderDetails);
+            newOrder.UserId = userId;
+
+            _repository.AddOrder(newOrder);
 
             return Created("Created", orderToCreate);
         }

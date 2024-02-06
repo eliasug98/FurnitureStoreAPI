@@ -39,12 +39,9 @@ namespace FurnitureStore.API.Services.Implementations
             return _context.Orders.Where(o => o.Id == idOrder).Any();
         }
 
-        public void AddOrder(Order order, List<OrderDetail> orderDetails)
+        public void AddOrder(Order order)
         {
             _context.Orders.Add(order);
-            _context.SaveChanges();
-            
-            _context.OrderDetails.AddRange(orderDetails);
             _context.SaveChanges();
         }
 

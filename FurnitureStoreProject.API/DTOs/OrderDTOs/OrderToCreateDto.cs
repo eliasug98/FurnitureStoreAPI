@@ -8,6 +8,5 @@ namespace FurnitureStore.API.DTOs.OrderDTOs
         public int UserId { get; set; }
         public ICollection<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
         
-        // probe con List, ICollection, IList, no probe modificando db de ICollection en Entidad a List
-    }   // es error en orderdetaildto tengo q mapear a orderdetail, es en controller o en profile, aca paso a OrderDetailToCreateDto y en controller comento el mapeo
+    }
 }

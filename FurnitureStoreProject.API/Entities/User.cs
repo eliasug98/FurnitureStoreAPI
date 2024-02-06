@@ -20,8 +20,7 @@ namespace FurnitureStore.API.Entities
         [MaxLength(150)]
         public string Email { get; set; }
 
-        [Required]
-        public string Role { get; set; }
+        public string Role { get; set; } = "Client";
         //public entidad entidad { get; set; }
         //public ICollection<entidad> entidad { get; set; }
         //public ICollection<Order> Orders { get; set; } = new List<Order>();

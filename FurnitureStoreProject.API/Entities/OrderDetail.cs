@@ -14,7 +14,6 @@ namespace FurnitureStore.API.Entities
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
 
-        [Required]
         public int OrderId { get; set; }
 
         [JsonIgnore]
