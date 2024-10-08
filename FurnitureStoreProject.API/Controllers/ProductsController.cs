@@ -22,6 +22,7 @@ namespace FurnitureStore.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<ProductDto>> GetProducts()
         {
             List<Product>? products = _repository.GetProducts().ToList();
