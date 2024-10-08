@@ -12,7 +12,9 @@ namespace FurnitureStore.API.Services.Interfaces
         bool EmailExists(string email);
         bool UserNameExists(string name);
         bool SaveChanges();
-        string ValidateCredentials(UserLoginDto authParams);
+        string ValidationMessage(UserLoginDto authParams);
+        User? ValidateCredentials(UserLoginDto authParams);
+        
         void Update(User user);
     }
 }

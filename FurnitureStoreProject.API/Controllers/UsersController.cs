@@ -29,7 +29,7 @@ namespace FurnitureStore.API.Controllers
         [HttpPost("authenticate")]
         public ActionResult<string> Authenticate([FromBody] UserLoginDto credentials)
         {
-            var validationMessage = _repository.ValidateCredentials(credentials);
+            var validationMessage = _repository.ValidationMessage(credentials);
 
             if (validationMessage == "invalid email")
             {
@@ -40,6 +40,8 @@ namespace FurnitureStore.API.Controllers
             {
                 return Unauthorized(new { message = "Invalid password." });
             }
+
+            var user = _repository.ValidateCredentials(credentials);
 
             var salt = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["AuthenticationConfiguration:Salt"])); //Traemos la SecretKey del Json. agregar antes: using Microsoft.IdentityModel.Tokens;
             var signingCredentials = new SigningCredentials(salt, SecurityAlgorithms.HmacSha256);

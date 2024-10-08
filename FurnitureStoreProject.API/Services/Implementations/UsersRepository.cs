@@ -56,7 +56,7 @@ namespace FurnitureStore.API.Services.Implementations
             return (_context.SaveChanges() >= 0);
         }
 
-        public string ValidateCredentials(UserLoginDto authParams)
+        public string ValidationMessage(UserLoginDto authParams)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == authParams.Email);
 
@@ -70,6 +70,13 @@ namespace FurnitureStore.API.Services.Implementations
                 return "invalid password";
             }
             return "valid";
+        }
+
+        public User? ValidateCredentials(UserLoginDto authParams)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == authParams.Email);
+
+            return user;
         }
 
     }
