@@ -85,7 +85,7 @@ namespace FurnitureStore.API.Controllers
             return Ok(orderDto);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost]
         public IActionResult CreateOrder([FromBody] OrderToCreateDto orderToCreate)
         {
             if (orderToCreate == null)
@@ -96,6 +96,8 @@ namespace FurnitureStore.API.Controllers
             var newOrder = _mapper.Map<Order>(orderToCreate);
 
             newOrder.UserId = userId;
+
+            newOrder.OrderDate = DateTime.UtcNow; // Asigna la fecha actual
 
             _repository.AddOrder(newOrder);
 

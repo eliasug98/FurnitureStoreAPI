@@ -89,9 +89,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(builder =>
 {
-    builder.AllowAnyOrigin()
+    builder.WithOrigins("http://localhost:5173") // Especifica el origen permitido
     .AllowAnyHeader()
-    .AllowAnyMethod();
+    .AllowAnyMethod()
+    .AllowCredentials(); // Si necesitas enviar cookies o credenciales
 });
 
 app.UseHttpsRedirection();

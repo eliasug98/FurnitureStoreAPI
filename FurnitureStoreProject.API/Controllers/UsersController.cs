@@ -60,7 +60,7 @@ namespace FurnitureStore.API.Controllers
             return Ok(tokenToReturn); //return token(string)
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [Authorize]
         public IActionResult GetUsers()
         {
@@ -77,7 +77,22 @@ namespace FurnitureStore.API.Controllers
             var usersDto = _mapper.Map<List<UserDto>>(users);
             return Ok(usersDto);
         }
-        
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetCurrentUser()
+        {
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? "0");
+            var user = _repository.GetUser(userId); // Obtener el usuario por el ID del token
+
+            if (user is null)
+            {
+                return NotFound("The user does not exist");
+            }
+
+            return Ok(_mapper.Map<UserDto>(user));
+        }
+
         [HttpGet("{id}")]
         [Authorize]
         public IActionResult GetUser(int id)

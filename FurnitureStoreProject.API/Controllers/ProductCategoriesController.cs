@@ -55,12 +55,21 @@ namespace FurnitureStore.API.Controllers
                 return Unauthorized("Not authorized to update category.");
             }
 
-            ProductCategory? category = _repository.GetCategoryByName(categoryUpdated.Name);
+            ProductCategory? category = _repository.GetCategoryByName(categoryUpdated.CurrentName);
             if(category == null)
                 return NotFound();
 
-            category.Name = categoryUpdated.Name;
+            category.Name = categoryUpdated.NewName;
             category.Description = categoryUpdated.Description;
+            // Si Icon está vacío, toma el icono existente
+            if (string.IsNullOrWhiteSpace(categoryUpdated.Icon))
+            {
+                category.Icon = category.Icon;  // Mantiene el icono existente
+            }
+            else
+            {
+                category.Icon = categoryUpdated.Icon;  // Actualiza con el nuevo icono
+            }
 
             _repository.Update(category);
 
