@@ -14,10 +14,12 @@ namespace FurnitureStore.API.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrdersRepository _repository;
+        private readonly IUsersRepository _usersRepository;
         private readonly IMapper _mapper;
-        public OrdersController(IOrdersRepository repository, IMapper mapper)
+        public OrdersController(IOrdersRepository repository, IUsersRepository usersRepository, IMapper mapper)
         {
             _repository = repository;
+            _usersRepository = usersRepository;
             _mapper = mapper;
         }
 
@@ -78,6 +80,32 @@ namespace FurnitureStore.API.Controllers
             List<Order> orders = _repository.GetOrdersByUserId(userId).ToList();
 
             if (orders.Count == 0) 
+                return NotFound("Order list is empty");
+
+            var orderDto = _mapper.Map<OrderDto>(orders);
+
+            return Ok(orderDto);
+        }
+
+        [HttpGet("user")]
+        [Authorize]
+        public IActionResult GetOrdersByCurrentUser()
+        {
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? "0");
+
+            var user = _usersRepository.GetUser(userId); // Obtener el usuario por el ID del token
+
+            if (user is null)
+            {
+                return NotFound("The user does not exist");
+            }
+
+            //if (!_repository.OrderExists(idOrder))
+            //    return NotFound();
+
+            List<Order> orders = _repository.GetOrdersByUserId(userId).ToList();
+
+            if (orders.Count == 0)
                 return NotFound("Order list is empty");
 
             var orderDto = _mapper.Map<OrderDto>(orders);
