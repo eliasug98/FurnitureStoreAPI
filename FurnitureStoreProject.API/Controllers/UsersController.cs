@@ -29,16 +29,10 @@ namespace FurnitureStore.API.Controllers
         [HttpPost("authenticate")]
         public ActionResult<string> Authenticate([FromBody] UserLoginDto credentials)
         {
-            var validationMessage = _repository.ValidationMessage(credentials);
 
-            if (validationMessage == "invalid email")
+            if (!ModelState.IsValid)
             {
-                return Unauthorized(new { message = "Invalid email." });
-            }
-
-            if (validationMessage == "invalid password")
-            {
-                return Unauthorized(new { message = "Invalid password." });
+                return BadRequest(ModelState); // Devuelve todos los errores de validación
             }
 
             var user = _repository.ValidateCredentials(credentials);
@@ -125,6 +119,12 @@ namespace FurnitureStore.API.Controllers
         [HttpPost]
         public IActionResult AddUser([FromBody] UserToCreateDto userToCreate)
         {
+            // Verifica si el modelo es válido
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Devuelve todos los errores de validación
+            }
+
             if (_repository.UserNameExists(userToCreate.Username))
             {
                 return BadRequest("Username already exist.");
