@@ -144,29 +144,42 @@ namespace FurnitureStore.API.Controllers
             return Created("Created", userDto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize]
-        public IActionResult UpdateUsername(int id, [FromHeader] string userNameUpdated)
+        public IActionResult UpdateUsername([FromBody] UserToUpdateDto userUpdated)
         {
-            var user = _repository.GetUser(id);
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? "0");
+            var user = _repository.GetUser(userId); // Obtener el usuario por el ID del token
             if (user is null)
             {
                 return NotFound("The user does not exist");
             }
 
             string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? "0");
 
             if (role != "Admin")
             {
-                if (userId != id)
+                if (userId != user.Id)
                     return Unauthorized("Not authorized to update users.");
             }
 
-            //user.Username = userUpdated.Username;
-            //user.Email = userUpdated.Email;
+            if (string.IsNullOrWhiteSpace(userUpdated.UserName))
+            {
+                user.UserName = user.UserName;  // Mantiene el nombre existente
+            }
+            else
+            {
+                user.UserName = userUpdated.UserName;  // Actualiza con el nuevo nombre
+            }
 
-            user.UserName = userNameUpdated;
+            if (string.IsNullOrWhiteSpace(userUpdated.Email))
+            {
+                user.Email = user.Email;  // Mantiene el email existente
+            }
+            else
+            {
+                user.Email = userUpdated.Email;  // Actualiza con el nuevo email
+            }
 
             _repository.Update(user);
 
