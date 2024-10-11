@@ -108,9 +108,9 @@ namespace FurnitureStore.API.Controllers
             if (orders.Count == 0)
                 return NotFound("Order list is empty");
 
-            var orderDto = _mapper.Map<OrderDto>(orders);
+            //var orderDto = _mapper.Map<OrderDto>(orders);
 
-            return Ok(orderDto);
+            return Ok(orders);
         }
 
         [HttpPost]

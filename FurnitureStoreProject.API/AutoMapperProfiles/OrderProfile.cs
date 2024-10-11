@@ -4,25 +4,30 @@
 
 namespace FurnitureStore.API.AutoMapperProfiles
 {
-    public class OrderProfile : Profile
+public class OrderProfile : Profile
+{
+    public OrderProfile() 
     {
-        public OrderProfile() 
-        {
-            CreateMap<Entities.Order, DTOs.OrderDTOs.OrderDto>();
-            CreateMap<DTOs.OrderDTOs.OrderDto, Entities.Order>();
-            //CreateMap<Entities.Order, DTOs.OrderDTOs.OrderToCreateDto>();
-            //CreateMap<DTOs.OrderDTOs.OrderToCreateDto, Entities.Order>();
-            CreateMap<Entities.Order, DTOs.OrderDTOs.OrderDto >()
-                .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails ?? new List<Entities.OrderDetail>()));
+        // Mapeo de Order a OrderDto
+        CreateMap<Entities.Order, DTOs.OrderDTOs.OrderDto>()
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
 
-            CreateMap<DTOs.OrderDetailDTOs.OrderDetailDto, Entities.OrderDetail>();
+        // Mapeo inverso de OrderDto a Order
+        CreateMap<DTOs.OrderDTOs.OrderDto, Entities.Order>();
 
-            CreateMap<DTOs.OrderDTOs.OrderToCreateDto, Entities.Order>()
-                .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+        // Mapeo de OrderDetail a OrderDetailDto
+        CreateMap<Entities.OrderDetail, DTOs.OrderDetailDTOs.OrderDetailDto>();
 
-            CreateMap<DTOs.OrderDTOs.OrderToUpdateDto, Entities.Order>()
-                    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+        // Mapeo inverso de OrderDetailDto a OrderDetail
+        CreateMap<DTOs.OrderDetailDTOs.OrderDetailDto, Entities.OrderDetail>();
 
-        }
+        // Mapeo de OrderToCreateDto a Order
+        CreateMap<DTOs.OrderDTOs.OrderToCreateDto, Entities.Order>()
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+
+        // Mapeo de OrderToUpdateDto a Order
+        CreateMap<DTOs.OrderDTOs.OrderToUpdateDto, Entities.Order>()
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
     }
+}
 }
