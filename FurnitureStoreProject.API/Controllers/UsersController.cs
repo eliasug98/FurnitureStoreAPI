@@ -38,7 +38,7 @@ namespace FurnitureStore.API.Controllers
             var user = _repository.ValidateCredentials(credentials);
             if(user == null)
             {
-                BadRequest("Incorrect email or password. Please try again");
+                return BadRequest("Incorrect email or password. Please try again");
             }
 
 
