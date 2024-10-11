@@ -36,6 +36,11 @@ namespace FurnitureStore.API.Controllers
             }
 
             var user = _repository.ValidateCredentials(credentials);
+            if(user == null)
+            {
+                BadRequest("Incorrect email or password. Please try again");
+            }
+
 
             var salt = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["AuthenticationConfiguration:Salt"])); //Traemos la SecretKey del Json. agregar antes: using Microsoft.IdentityModel.Tokens;
             var signingCredentials = new SigningCredentials(salt, SecurityAlgorithms.HmacSha256);
