@@ -107,6 +107,34 @@ namespace FurnitureStore.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("stock/{id}")]
+        [Authorize]
+        public ActionResult UpdateStock(int id)
+        {
+
+            string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
+
+            if (role != "Admin")
+            {
+                return Unauthorized("Not authorized to update products.");
+            }
+
+            var productToUpdate = _repository.GetProductById(id);
+            if (productToUpdate == null)
+                return NotFound();
+
+            productToUpdate.Available = !productToUpdate.Available;
+
+            _repository.Update(productToUpdate);
+
+            if (!_repository.SaveChanges())
+            {
+                return BadRequest("product could not be updated");
+            }
+
+            return NoContent();
+        }
+
         [HttpDelete("{idProduct}")]
         [Authorize]
         public ActionResult DeleteProduct(int idProduct)

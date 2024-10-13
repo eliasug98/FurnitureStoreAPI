@@ -10,6 +10,7 @@ namespace FurnitureStore.API.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
+        public bool IsCompleted { get; set; } = false;
 
         [Required]
         public int UserId { get; set; }

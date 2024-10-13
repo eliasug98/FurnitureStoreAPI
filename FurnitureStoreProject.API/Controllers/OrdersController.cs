@@ -132,6 +132,33 @@ namespace FurnitureStore.API.Controllers
             return Created("Created", orderToCreate);
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public IActionResult UpdateOrder(int id)
+        {
+            string role = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value ?? "Client";
+
+            if (role != "Admin")
+            {
+                return Unauthorized("Not authorized to update order.");
+            }
+
+            Order? order = _repository.GetOrderById(id);
+            if (order == null)
+                return NotFound();
+
+            order.IsCompleted = !order.IsCompleted;
+
+            var orderDetails = order.OrderDetails.ToList();
+
+            _repository.Update(order, orderDetails);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+
+        }
+
 
         [HttpDelete("{idOrder}")]
         [Authorize]
