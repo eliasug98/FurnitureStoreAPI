@@ -1,4 +1,5 @@
 ﻿using FurnitureStore.API.Entities;
+using FurnitureStoreProject.API.Entities;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.X500;
 
@@ -11,6 +12,7 @@ namespace FurnitureStore.API.DBContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public FurnitureStoreContext(DbContextOptions<FurnitureStoreContext> options) : base(options)
         {
