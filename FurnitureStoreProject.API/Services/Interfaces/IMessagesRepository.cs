@@ -10,6 +10,7 @@ namespace FurnitureStoreProject.API.Services.Interfaces
         IEnumerable<Message> GetMessages();
         bool MessageExists(int id);
         void SaveChanges();
-        IEnumerable<Message> GetUnreadMessages(int userId);
+        IEnumerable<Message> GetUnreadAdminMessages(int userId);
+        IEnumerable<Message> GetUnreadUserMessages(int userId);
     }
 }

@@ -20,11 +20,15 @@ namespace FurnitureStoreProject.API.Services.Implementations
             return _context.Messages;
         }
 
-        public IEnumerable<Message> GetUnreadMessages(int userId)
+        public IEnumerable<Message> GetUnreadAdminMessages(int userId)
         {
-            return _context.Messages.Where(m => m.UserId == userId && !m.IsRead);
+            return _context.Messages.Where(m => m.UserId == userId && !m.IsRead && m.AdminId != 0);
         }
 
+        public IEnumerable<Message> GetUnreadUserMessages(int userId)
+        {
+            return _context.Messages.Where(m => m.UserId == userId && !m.IsRead && m.AdminId == 0);
+        }
 
         public void AddMessage(Message message)
         {
