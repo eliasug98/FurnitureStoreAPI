@@ -87,7 +87,7 @@ namespace FurnitureStoreProject.API.Controllers
             return Created("Created", message);
         }
 
-        // POST: api/messages/markAsRead
+        // POST: api/messages/markAsRead/{userId}
         [HttpPost("markAsRead/{userId}")]
         [Authorize]
         public IActionResult MarkMessagesAsRead(int userId)
@@ -98,13 +98,26 @@ namespace FurnitureStoreProject.API.Controllers
             }
 
             var currentUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value);
-            var unreadMessages = currentUserId == userId
-                ? _repository.GetUnreadAdminMessages(userId).ToList()
-                : _repository.GetUnreadUserMessages(userId).ToList();
+            List<Message> unreadMessages;
+
+            if (currentUserId == userId)
+            {
+                unreadMessages = _repository.GetUnreadAdminMessages(userId).ToList();
+            }
+            else
+            {
+                unreadMessages = _repository.GetUnreadUserMessages(userId).ToList();
+            }
+
+            if (!unreadMessages.Any())
+            {
+                return NotFound("No unread messages found.");
+            }
 
             foreach (var message in unreadMessages)
             {
-                message.IsRead = true;
+                message.IsRead = true; 
+                                       
             }
 
             _repository.SaveChanges();
