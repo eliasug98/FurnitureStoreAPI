@@ -69,19 +69,18 @@ namespace FurnitureStore.API.DBContext
             //    },
             //    new User()
             //    {
-            //        Id = 3,
-            //        UserName = "cliente1",
-            //        Password = "sdDEasfegR12sgDsnasfdA",
-            //        Email = "usuario3@gmail.com",
-            //        Role = "Cliente"
+            //        "Id": 10,
+            //        "Username" = "eliasug98",
+            //        "Password" = "asd123",
+            //        "Email" = "eliasug98@hotmail.com",
+            //        "Role" = "Client",
             //    },
-            //    new User()
             //    {
-            //        Id = 4,
-            //        UserName = "cliente2",
-            //        Password = "sdDEasqegR12FgDsnasudA",
-            //        Email = "usuario4@gmail.com",
-            //        Role = "Cliente"
+            //        "Id" = 13,
+            //        "Username" = "usuariodeprueba",
+            //        "Password" = "123456",
+            //        "Email" = "usuariodeprueba@gmail.com",
+            //        "Role" = "Client"
             //    }
             //};
             //modelBuilder.Entity<User>().HasData(users);
